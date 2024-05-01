@@ -1,0 +1,146 @@
+{% include "header.html" %} 
+
+<div class="card border-light m-3 page-container">
+    <div class="card-body">
+        <h5 class="card-title">Notification Details</h5>
+        <hr class="bg-dark">
+
+        <div class="row">
+            <div class="col-3 text-dark"><b>File Name</b></div>
+            <div class="col-5 text-dark"><b>File Title</b></div>
+            <div class="col-4 text-dark"><b>File Putup By</b></div>
+        </div>
+        <div class="row">
+            <div class="col-3 text-dark">{{file.file_name}}</div>
+            <div class="col-5 text-dark">{{file.file_title}}</div>
+            <div class="col-4 text-dark">{{file.file_put_uname}}</div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-3 text-dark"><b>File Status</b></div>
+            <div class="col-5 text-dark"><b>File Description</b></div>
+            {% if file.document != 'NULL'%}
+            <div class="col-4 text-dark"><b>Document</b></div>
+            {% endif %}
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-3 text-dark">{{file.file_status}}</div>
+            <div class="col-5 text-dark">{{file.file_desc}}</div>
+            {% if file.document != 'NULL'%}
+            <a class="col-2" href="{{file.document.url}}">{{file.document}}</a>
+            {% endif %}
+        </div>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <label class="form-label text-dark" for="comment"><b>User Comment</b></label>
+            <textarea name="userComment" class='form-control' style="width: 1150px;" id="comment" rows="2"></textarea>
+
+            <div class="row mt-3">
+                <div class="col-4">
+                    <label class="form-label text-dark" for="location"><b>Office Location</b></label>
+                </div>
+
+                <div class="col-4">
+                    <label class="form-label text-dark" for="department"><b>Department</b></label>
+                </div>
+
+                <div class="col-4">
+                    <label class="form-label text-dark" for="user"><b>Send to User</b></label>
+                </div>
+            </div>
+
+            <div class="row mt-1">
+                <div class="col-4">
+                    <select name="officeLocation" id="location" style="width: 300px;">
+                        <option value="">Select</option>
+                        {% for data in office %}
+                        <option value="{{data.division_code}}">{{data.division_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-4">
+                    <select name="department" id="department" style="width: 300px;">
+                        <option value="">Select</option>
+                        {% for data in department %}
+                        <option value="{{data.id}}">{{data.department_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-4">
+                    <select name="user" id="user" style="width: 300px;">
+                        <option value="">Select</option>
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-5"></div>
+                <div class="col-1 pt-3">
+                    <a href="/fileManagement/" class="btn btn-light btn-outline-dark">Cancel</a>
+                </div>
+                <div class="col-2 pt-3">
+                    <input type="hidden" name="name" value="{{file.file_name}}">
+                    <input type="hidden" name="insert" value="1">
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        // Get the CSRF token
+        var csrftoken = $('[name=csrfmiddlewaretoken]').val();
+
+        // Set the CSRF token in the AJAX header
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/.test(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+                }
+            }
+        });
+
+        // AJAX request to get users options
+        $('#department').change(function () {
+            var division_code = $('#location').val();
+            var department_id = $(this).val();
+            $.ajax({
+                url: '/loadUsers/',
+                type: 'POST',
+                data: {
+                    'officeLocation': division_code,
+                    'department': department_id
+                },
+                dataType: 'json',
+                success: function (data) {
+                    var users = data.users;
+                    var dropdown_html = '';
+
+                    if (users.length == 0) {
+                        dropdown_html += '<option value="' + " " + '">' + "No User" + '</option>';
+                    }
+
+                    else {
+                        for (var i = 0; i < users.length; i++) {
+                            dropdown_html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                        }
+                    }
+                    $('#user').html(dropdown_html);
+                    
+                }
+            });
+        });
+    });
+
+</script>
+
+{% include "footer.html" %}

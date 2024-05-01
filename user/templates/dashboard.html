@@ -1,0 +1,141 @@
+{% include "header.html" %}
+
+<div class="card border-light m-3 ">
+    <div class="card-body">
+        <h5 class="card-title">Dashboard</h5>
+        <hr class="bg-dark">
+
+        <div class="row">
+            <div class="col-3">
+                <div class="badge widget"
+                    style="background-color: rgb(22, 106, 158);color: rgb(232, 230, 227);text-align: right;width: 260px;">
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fa fa-copy fa-5x"></i>
+                        </div>
+                        <div class="col-8 text-right">
+                            <span> Total Files </span>
+                            <h2 class="font-bold text-light pt-2">{{totalFiles}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="badge widget"
+                    style="background-color: rgb(28, 158, 160);color: rgb(232, 230, 227);text-align: right;width: 260px;">
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fa fa-file-o fa-5x"></i>
+                        </div>
+                        <div class="col-8 text-right">
+                            <span> Total Files Create </span>
+                            <h2 class="font-bold text-light pt-2">{{fileCreate}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="badge widget"
+                    style="background-color: rgb(38, 51, 64);color: rgb(232, 230, 227);text-align: right;width: 260px;">
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fa fa-file-text-o fa-5x"></i>
+                        </div>
+                        <div class="col-8 text-right">
+                            <span> Files In Process </span>
+                            <h2 class="font-bold text-light pt-2">{{fileInprocess}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="badge widget"
+                    style="background-color: rgb(21, 143, 118);color: rgb(232, 230, 227);text-align: right;width: 260px;">
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fa fa-thumbs-o-up fa-5x"></i>
+                        </div>
+                        <div class="col-8 text-right">
+                            <span> Total Files Approve </span>
+                            <h2 class="font-bold text-light pt-2">{{fileApprove}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-3">
+                <div class="badge widget"
+                    style="background-color: rgb(149, 81, 6);color: rgb(232, 230, 227);text-align: right;width: 260px;">
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fa fa-thumbs-o-down fa-5x"></i>
+                        </div>
+                        <div class="col-8">
+                            <span> Total Files Reject </span>
+                            <h2 class="font-bold text-light pt-2">{{fileReject}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="badge widget"
+                    style="background-color: rgb(148, 16, 30);color: rgb(232, 230, 227);text-align: right;width: 260px;">
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fa fa-trash-o fa-5x"></i>
+                        </div>
+                        <div class="col-8 text-right">
+                            <span> Total Files Cancel </span>
+                            <h2 class="font-bold text-light pt-2">{{fileCancel}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="card border-light m-3">
+    <div class="card-body">
+        <h5 class="card-title">Section Wise Pending File With You</h5>
+        <hr class="bg-dark">
+
+        <table class="table table-striped table-bordered table-hover mt-4" style="width: 950px;">
+            <tr>
+                <th>Sr.No</th>
+                <th>Section</th>
+                <th>Pending File</th>
+                <th>Less than 7 Days</th>
+                <th>7 to 15 Days</th>
+                <th>15 to 30 Days</th>
+                <th>More than 30 Days</th>
+            </tr>
+            {% for key,data in department.items %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{ key }}</td>
+                {% for i in data %}
+                <td>{{ i }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="2">Total :</td>
+                <td colspan="5">{{fileInprocess}}</td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+
+
+{% include "footer.html" %}

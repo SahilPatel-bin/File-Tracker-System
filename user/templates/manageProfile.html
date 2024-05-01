@@ -1,0 +1,42 @@
+{% include "header.html" %}
+
+<div class="card border-light m-3 page-container">
+    <div class="card-body">
+        <h5 class="card-title">Profile Details</h5>
+        <hr class="bg-dark">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-4">
+                    <label class="form-label" for="email">Email ID</label>
+                </div>
+                <div class="col-4">
+                    <label class="form-label" for="phone">Phone</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <input type="email" class="form-control" name="email" placeholder="Enter email" id="email" value="{{email}}">
+                </div>
+                <div class="col-4">
+                    <input type="tel" class="form-control" name="phone" placeholder="Enter phone"
+                        pattern="[789][0-9]{9}" id="phone" value="{{phone}}">
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-3"></div>
+                <div class="col-1 pt-3">
+                    <a href="/home/" class="btn btn-light btn-outline-dark">Cancel</a>
+                </div>
+                <div class="col-2 pt-3">
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+{% include "footer.html" %}

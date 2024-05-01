@@ -1,0 +1,36 @@
+<!-- Footer Start -->
+{% load static %}
+<div class="container-fluid bg-dark text-white-50 footer" id="footer">
+
+    <div class="copyright">
+        <div class="row">
+            <div class="col-md-12 text-center mb-3 mb-md-0">
+                &copy; File Tracker System , All Right Reserved. Designed By Sahil Patel
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Footer End -->
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top pt-2"><i class="bi bi-arrow-up"></i></a>
+
+<!-- JavaScript Libraries -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/wow.min.js' %}"></script>
+<script src="{% static 'js/easing.min.js' %}"></script>
+<script src="{% static 'js/waypoints.min.js' %}"></script>
+<script src="{% static 'js/counterup.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+<!-- Template Javascript -->
+<script src="{% static 'js/main.js' %}"></script>
+
+<script>
+    let currentPath = window.location.pathname;
+    currentPath = currentPath.replace(/\//g, "");
+    const action = document.getElementById(currentPath);
+    action.classList.add("active");
+</script>

@@ -1,0 +1,134 @@
+{% include "header.html" %}
+
+<div class="card border-light m-3 page-container">
+    <div class="card-body">
+        <h5 class="card-title">File List Report</h5>
+        <hr class="bg-dark">
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-4 text-dark">From Date</div>
+                <div class="col-4 text-dark">To Date</div>
+                <div class="col-4 text-dark">Department</div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-4">
+                    <div class="input-group">
+                        <input type="date" class="form-control" placeholder="Select date" name="fromDate" id="fromDate"
+                            style="border-radius: 0px;" value="{{startDate}}">
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="input-group">
+                        <input type="date" class="form-control" name="toDate" id="toDate" style="border-radius: 0px;" value="{{endDate}}">
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <select class="form-select" style="border-radius: 0px;" name="department">
+                        <option value="{{department}}">{{department}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-4 text-dark">File Status</div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-4">
+                    <select class="form-select" name="status" style="border-radius: 0px;">
+                        <option value="all" selected id="all">ALL</option>
+                        <option value="CREATE" id="CREATE">CREATE</option>
+                        <option value="InProcess" id="InProcess">InProcess</option>
+                        <option value="APPROVED" id="APPROVED">APPROVED</option>
+                        <option value="REJECTED" id="REJECTED">REJECTED</option>
+                        <option value="CANCEL" id="CANCEL">CANCEL</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-11"></div>
+                <div class="col-1">
+                    <button type="submit" class="btn btn-success">SUBMIT</button>
+                </div>
+            </div>
+        </form>
+
+        <table class="table table-striped table-hover mt-4">
+            <tr>
+                <th>Sr.No.</th>
+                <th>File Name</th>
+                <th>Section</th>
+                <th>Subject</th>
+                <th>Created Date</th>
+                <th>Put Up By</th>
+                <th>Current User</th>
+                <th>Status</th>
+            </tr>
+
+            {% if data|length == 0 %}
+            <tr>
+                <td colspan="8" style="text-align: center;">No data available in table</td>
+            </tr>
+
+            {% else %}
+            {% for i in data %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.file_name}}</td>
+                <td>{{i.section}}</td>
+                <td>{{i.subject}}</td>
+                <td>{{i.created_date}}</td>
+                <td>{{i.putup}}</td>
+                <td>{{i.current_user}}</td>
+                <td>{{i.status}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </table>
+    </div>
+</div>
+
+{% if not startDate %}
+<script> 
+    let today = new Date();
+    let day = today.getDate();
+    let month = today.getMonth() + 1;
+    let year = today.getFullYear();
+    
+    if (day < 10) {
+        day = '0' + day;
+    }
+    if (month < 10) {
+        month = '0' + month;
+    }
+    let todayformat = year + '-' + month + '-' + day;
+    document.getElementById("toDate").value = todayformat;
+    document.getElementById("toDate").max = todayformat;
+
+    today.setMonth(month - 1);
+    month = today.getMonth()
+    if (month < 10) {
+        month = '0' + month;
+    }
+    todayformat = year + '-' + month + '-' + day;
+    document.getElementById("fromDate").value = todayformat;
+
+</script>
+{% else %}
+<script>
+    let myOption = document.getElementById("all");
+    myOption.selected = false;
+    myOption = document.getElementById("{{ file_status }}");
+    myOption.selected = true;
+    let limit = new Date().toISOString().split('T')[0];
+    document.getElementById("toDate").max = limit;
+</script>
+{% endif %}
+
+{% include "footer.html" %}
