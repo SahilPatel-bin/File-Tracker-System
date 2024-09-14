@@ -1,0 +1,5 @@
+/file_tracker_system/__pycache__
+*.pyc
+*.pdf
+/file_tracker_system/media/*
+/file_tracker_system/user/__pycache__

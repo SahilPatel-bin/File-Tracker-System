@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="utf-8">
+    <title>File Tracker System</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Ubuntu:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'css/animate.min.css'%}" rel="stylesheet">
+    <link href="{% static 'css/owl.carousel.min.css'%}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css'%}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css'%}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .print-button {
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        @media print {
+            .print-button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card border-light m-3 page-container">
+        <div class="card-body">
+            <h5 class="card-title">File Details <span style="float: right;padding-right:200px;">File Status :-
+                    {{file.file_status|slice:":1"|upper }}{{ file.file_status|slice:"1:"|lower }}</span></h5>
+            <hr class="bg-dark">
+
+            <div class="row">
+                <div class="col-3 text-dark"><b>File Name</b></div>
+                <div class="col-5 text-dark"><b>File Title</b></div>
+                <div class="col-4 text-dark"><b>File Putup By</b></div>
+            </div>
+            <div class="row mt-1">
+                <div class="col-3 text-dark">{{file.file_name}}</div>
+                <div class="col-5 text-dark">{{file.file_title}}</div>
+                <div class="col-4 text-dark">{{file.file_put_uname}}</div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="text-dark"><b>File Description</b></div>
+            </div>
+
+            <div class="row mb-5 mt-1">
+                <div class="text-dark">{{file.file_desc}}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-1 text-dark"><b>Sr. No.</b></div>
+                <div class="col-1 text-dark"><b>Section</b></div>
+                <div class="col-4 text-dark"><b>Sender User</b></div>
+                <div class="col-2 text-dark"><b>Send Date</b></div>
+                <div class="col-2 text-dark"><b>Read Date</b></div>
+                <div class="col-2 text-dark"><b>Status</b></div>
+            </div>
+
+            {% for i in data%}
+            <hr class="bg-dark">
+            <div class="row">
+                <div class="col-1 text-dark">{{forloop.counter}}</div>
+                <div class="col-1 text-dark">{{i.section}}</div>
+                <div class="col-4 text-dark">{{i.senderUser}}</div>
+                <div class="col-2 text-dark">{{i.sender_date}}</div>
+                <div class="col-2 text-dark">{{i.action_read_date}}</div>
+                <div class="col-2 text-dark">{{i.action}}</div>
+
+            </div>
+            {% endfor %}
+
+            <div class="row">
+                <div class="col-5"></div>
+                <button class="print-button btn btn-success text-center mt-5 col-1"
+                    onclick="window.print()">Print</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/wow.min.js' %}"></script>
+    <script src="{% static 'js/easing.min.js' %}"></script>
+    <script src="{% static 'js/waypoints.min.js' %}"></script>
+    <script src="{% static 'js/counterup.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+</body>

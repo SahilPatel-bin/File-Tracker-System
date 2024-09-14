@@ -1,0 +1,33 @@
+{% include "header.html" %}
+
+<div class="card border-light m-3 page-container">
+    <div class="card-body">
+        <h5 class="card-title">File Detais</h5>
+        <hr class="bg-dark">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label class="form-label text-dark" for="subject">File Subjects</label>
+            <input type="text" class="form-control" style="width: 1150px;" name="fileSubject" id="subject" required value="{{title}}">
+
+            <label class="form-label text-dark" for="description">Description</label>
+            <textarea name="fileDescription" class='form-control' style="width: 1150px;" id="description"
+                rows="3">{{desc}}</textarea>
+
+            <label class="form-label mt-2 text-dark" for="file">Upload Document</label><br>
+            <input type="file" name="document" id="file" value="{{document}}" accept=".pdf,.doc,.docx">
+
+            <div class="row">
+                <div class="col-5"></div>
+                <div class="col-1 pt-3">
+                    <a href="/fileManagement/" class="btn btn-light btn-outline-dark">Cancel</a>
+                </div>
+                <div class="col-2 pt-3">
+                    <input type="hidden" name="update" value="1">
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% include "footer.html" %}
